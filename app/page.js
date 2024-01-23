@@ -1,9 +1,26 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from 'next/link';
+import Image from 'next/image';
+import styles from './page.module.css';
+import { getSortedPostsData } from '@/utils/blog';
 
 export default function Home() {
+  const allPostsData = getSortedPostsData();
+  console.log('allPostsData - ', allPostsData);
+
   return (
     <main className={styles.main}>
+      <section className>
+        <h2 className>Blog</h2>
+        <ul className>
+          {allPostsData.map(({ id, name, title }) => (
+            <li className key={id}>
+              <div className="font-medium mb-1 mt-5">
+                <Link href={`/blog/${id}/${name}`}>{title}</Link>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
@@ -15,7 +32,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{" "}
+            By{' '}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
@@ -85,9 +102,7 @@ export default function Home() {
           <h2>
             Deploy <span>-&gt;</span>
           </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
+          <p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
         </a>
       </div>
     </main>
